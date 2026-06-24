@@ -1,0 +1,141 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             String        @id @default(uuid())
+  email          String        @unique
+  name           String
+  role           String        // "DOCTOR" | "ADMIN" | "ASSISTANT" | "PATIENT"
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  doctorProfile  Doctor?
+  patientProfile Patient?
+  auditLogs      AuditLog[]
+  createdAt      DateTime      @default(now())
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  name      String
+  users     User[]
+  createdAt DateTime @default(now())
+}
+
+model Doctor {
+  id             String      @id @default(uuid())
+  userId         String      @unique
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  specialty      String
+  preferences    String      // JSON stringified preferences (SQLite fallback for Json)
+  patients       Patient[]
+  encounters     Encounter[]
+  templates      Template[]
+  aiUsageMinutes Int         @default(0)
+}
+
+model Patient {
+  id             String      @id @default(uuid())
+  userId         String?     @unique
+  user           User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name           String
+  dob            DateTime
+  gender         String
+  phone          String?
+  medicalHistory String?     // Patient conditions, allergies, etc.
+  doctorId       String
+  doctor         Doctor      @relation(fields: [doctorId], references: [id])
+  encounters     Encounter[]
+  reports        Report[]
+  documents      Document[]
+  messages       Message[]
+  createdAt      DateTime    @default(now())
+}
+
+model Encounter {
+  id          String        @id @default(uuid())
+  patientId   String
+  patient     Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctorId    String
+  doctor      Doctor        @relation(fields: [doctorId], references: [id])
+  date        DateTime      @default(now())
+  transcript  String
+  status      String        // "COMPLETED" | "PENDING"
+  notes       ClinicalNote[]
+  voiceRecord VoiceRecord?
+  createdAt   DateTime      @default(now())
+}
+
+model VoiceRecord {
+  id          String    @id @default(uuid())
+  encounterId String    @unique
+  encounter   Encounter @relation(fields: [encounterId], references: [id], onDelete: Cascade)
+  durationSec Int
+  fileUrl     String?
+  createdAt   DateTime  @default(now())
+}
+
+model ClinicalNote {
+  id              String    @id @default(uuid())
+  encounterId     String
+  encounter       Encounter @relation(fields: [encounterId], references: [id], onDelete: Cascade)
+  type            String    // "SOAP" | "PROGRESS" | "CONSULTATION" | "DISCHARGE" | "REFERRAL"
+  content         String    // JSON stringified content
+  qualityScore    Int       @default(100)
+  qualityFeedback String?   // JSON stringified feedback suggestions
+  createdAt       DateTime  @default(now())
+}
+
+model Template {
+  id        String   @id @default(uuid())
+  doctorId  String?
+  doctor    Doctor?  @relation(fields: [doctorId], references: [id])
+  name      String   // "Cardiology", "Dental", "Dermatology", "Pediatrics", "General Medicine"
+  specialty String
+  structure String   // JSON stringified guidelines or form layout
+  isSystem  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Report {
+  id        String   @id @default(uuid())
+  patientId String
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  type      String   // "LAB_SUMMARY" | "VISIT_SUMMARY" | "REFERRAL_REPORT" | "PATIENT_INSTRUCTIONS"
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model Document {
+  id        String   @id @default(uuid())
+  patientId String
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  name      String
+  category  String
+  fileUrl   String?
+  content   String?  // OCR/Extracted text
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  patientId String
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  senderId  String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  action    String   // e.g. "Generated SOAP Note"
+  details   String
+  timestamp DateTime @default(now())
+}

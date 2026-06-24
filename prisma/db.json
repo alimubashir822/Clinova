@@ -1,0 +1,221 @@
+{
+  "users": [
+    {
+      "id": "user-sarah",
+      "email": "sarah.jenkins@clinova.ai",
+      "name": "Dr. Sarah Jenkins",
+      "role": "DOCTOR",
+      "organizationId": "org-clinova",
+      "createdAt": "2025-01-10T08:00:00.000Z"
+    },
+    {
+      "id": "user-admin",
+      "email": "admin@clinova.ai",
+      "name": "Clinova Admin",
+      "role": "ADMIN",
+      "organizationId": "org-clinova",
+      "createdAt": "2025-01-01T08:00:00.000Z"
+    }
+  ],
+  "organizations": [
+    {
+      "id": "org-clinova",
+      "name": "Clinova Health Network",
+      "createdAt": "2025-01-01T08:00:00.000Z"
+    }
+  ],
+  "doctors": [
+    {
+      "id": "doctor-sarah",
+      "userId": "user-sarah",
+      "specialty": "General Medicine / Cardiology",
+      "preferences": "{\"noteStyle\":\"short\",\"showReviewAIPrompt\":true,\"autoSave\":true}",
+      "aiUsageMinutes": 142
+    }
+  ],
+  "patients": [
+    {
+      "id": "patient-1",
+      "name": "John Doe",
+      "dob": "1981-04-12T00:00:00.000Z",
+      "gender": "Male",
+      "phone": "+1 (555) 123-4567",
+      "medicalHistory": "Hypertension, Hyperlipidemia. No known drug allergies.",
+      "doctorId": "doctor-sarah",
+      "createdAt": "2025-01-12T09:00:00.000Z"
+    },
+    {
+      "id": "patient-2",
+      "name": "Emily Chen",
+      "dob": "1998-09-22T00:00:00.000Z",
+      "gender": "Female",
+      "phone": "+1 (555) 987-6543",
+      "medicalHistory": "Mild asthma, seasonal allergic rhinitis.",
+      "doctorId": "doctor-sarah",
+      "createdAt": "2025-02-05T10:00:00.000Z"
+    },
+    {
+      "id": "patient-3",
+      "name": "Marcus Thompson",
+      "dob": "1959-11-05T00:00:00.000Z",
+      "gender": "Male",
+      "phone": "+1 (555) 456-7890",
+      "medicalHistory": "Type 2 Diabetes (diet controlled), Osteoarthritis of both knees. Penicillin allergy (causes hives).",
+      "doctorId": "doctor-sarah",
+      "createdAt": "2025-03-01T11:00:00.000Z"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "encounter-1",
+      "patientId": "patient-1",
+      "doctorId": "doctor-sarah",
+      "date": "2025-01-15T10:00:00.000Z",
+      "transcript": "Doctor: Welcome back John. How are your readings? Patient: Hi doctor, I have been checking my blood pressure at home. It averages around 135 over 85. Doctor: Okay, that is pretty stable, but we want to make sure it stays under 130/80. Any side effects from the Lisinopril? Patient: Just a dry cough occasionally, but it is not too bad. Doctor: Let's monitor that cough. If it gets worse, we might switch you to an ARB. Continue Lisinopril 10mg daily. Let's meet again in 3 months.",
+      "status": "COMPLETED",
+      "createdAt": "2025-01-15T10:30:00.000Z"
+    },
+    {
+      "id": "encounter-2",
+      "patientId": "patient-1",
+      "doctorId": "doctor-sarah",
+      "date": "2025-04-18T10:00:00.000Z",
+      "transcript": "Doctor: Hi John. How is the BP and the cough? Patient: The cough went away mostly. BP readings are averaging 128 over 78. Doctor: Excellent, that's exactly where we want it. Your lipid panel from last week showed cholesterol of 210, LDL 130. We should start low-dose Atorvastatin to manage that. Let's do 10mg at night. Patient: Okay, sounds good. Doctor: Keep up the low-sodium diet and daily walking.",
+      "status": "COMPLETED",
+      "createdAt": "2025-04-18T10:45:00.000Z"
+    },
+    {
+      "id": "encounter-3",
+      "patientId": "patient-1",
+      "doctorId": "doctor-sarah",
+      "date": "2026-06-24T10:00:00.000Z",
+      "transcript": "Doctor: Welcome back John. Any new concerns today? Patient: Well, doctor, I've had some mild chest pain for the last three days. It happens when I climb the stairs. It goes away after I rest for a few minutes. Doctor: That is very important. Is it a sharp pain or more like a pressure/heaviness? Patient: More like a heavy squeezing feeling in the center of my chest. No pain down my arm or neck. Doctor: Any shortness of breath, sweating, or nausea? Patient: A little short of breath, yes. No sweating. Doctor: We need to evaluate this right away. I'm going to perform an EKG now, and I will refer you to Cardiology for a stress test and further evaluation. I also want you to take an Aspirin 81mg daily starting today. If you experience crushing chest pain, pain radiating to your jaw or arm, sweating or severe shortness of breath, you must call 911 immediately. Patient: Understood, doctor.",
+      "status": "PENDING",
+      "createdAt": "2026-06-24T10:20:00.000Z"
+    }
+  ],
+  "voiceRecords": [
+    {
+      "id": "voice-1",
+      "encounterId": "encounter-3",
+      "durationSec": 154,
+      "fileUrl": "/audio/encounter-3.mp3",
+      "createdAt": "2026-06-24T10:20:00.000Z"
+    }
+  ],
+  "clinicalNotes": [
+    {
+      "id": "note-1",
+      "encounterId": "encounter-1",
+      "type": "SOAP",
+      "content": "{\"subjective\":\"Patient returns for blood pressure monitoring. Reports home blood pressure readings averaging 135/85. Complains of mild, intermittent dry cough, which he associates with Lisinopril. Denies chest pain, shortness of breath, or palpitations.\",\"objective\":\"Vital signs: BP 136/84 mmHg, HR 72 bpm, Temp 98.4 F. Cardiovascular: Regular rate and rhythm, normal S1/S2, no murmurs. Lungs: Clear to auscultation bilaterally.\",\"assessment\":\"1. Essential Hypertension - stable on Lisinopril but BP is slightly above target (<130/80).\\n2. Mild dry cough - likely secondary to ACE inhibitor.\",\"plan\":\"1. Continue Lisinopril 10mg daily.\\n2. Monitor dry cough. If it becomes intolerable, consider transition to Losartan (ARB).\\n3. Re-evaluate blood pressure in 3 months.\\n4. Counseled on low-sodium diet and exercise.\"}",
+      "qualityScore": 95,
+      "qualityFeedback": "{\"warnings\":[],\"suggestions\":[\"Add home cuff calibration reminder.\"]}",
+      "createdAt": "2025-01-15T10:30:00.000Z"
+    },
+    {
+      "id": "note-2",
+      "encounterId": "encounter-2",
+      "type": "SOAP",
+      "content": "{\"subjective\":\"Patient reports home BP readings are now excellent, averaging 128/78. Notes that the dry cough previously experienced has resolved. Denies chest pain or shortness of breath. Active lifestyle maintained.\",\"objective\":\"BP: 126/78 mmHg, HR 68 bpm. Heart: Normal sinus rhythm. Lungs: Clear. Lab review: Total Cholesterol 210 mg/dL, LDL-C 130 mg/dL.\",\"assessment\":\"1. Hypertension - well controlled on Lisinopril.\\n2. Hyperlipidemia - LDL elevated at 130, CV risk assessment warrants statin therapy.\",\"plan\":\"1. Continue Lisinopril 10mg daily.\\n2. Initiate Atorvastatin 10mg tablet once daily at bedtime.\\n3. Check fasting lipid profile and liver function tests in 8-12 weeks.\\n4. Emphasized cardiovascular exercise and low-fat, low-cholesterol diet.\"}",
+      "qualityScore": 98,
+      "qualityFeedback": "{\"warnings\":[],\"suggestions\":[]}",
+      "createdAt": "2025-04-18T10:45:00.000Z"
+    }
+  ],
+  "templates": [
+    {
+      "id": "template-cardiology",
+      "name": "Cardiology Assessment",
+      "specialty": "Cardiology",
+      "structure": "{\"fields\":[{\"name\":\"Chief Complaint\",\"id\":\"cc\",\"placeholder\":\"e.g., Chest pain, palpitations\"},{\"name\":\"History of Present Illness (HPI)\",\"id\":\"hpi\",\"placeholder\":\"Duration, radiation, aggravating factors\"},{\"name\":\"Cardiac Risk Factors\",\"id\":\"risk_factors\",\"placeholder\":\"HTN, lipids, smoking, family history\"},{\"name\":\"Cardiovascular Exam\",\"id\":\"exam\",\"placeholder\":\"Murmurs, rubs, gallops, pulses, edema\"},{\"name\":\"Diagnostics (EKG/Echo)\",\"id\":\"diagnostics\",\"placeholder\":\"Rhythm, ST changes, EF\"},{\"name\":\"Management Plan\",\"id\":\"plan\",\"placeholder\":\"Meds, referrals, warning signs\"}]}",
+      "isSystem": true,
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "template-pediatrics",
+      "name": "Pediatric Well-Child Visit",
+      "specialty": "Pediatrics",
+      "structure": "{\"fields\":[{\"name\":\"Growth Metrics & Percentiles\",\"id\":\"growth\",\"placeholder\":\"Height, weight, head circumference\"},{\"name\":\"Developmental Milestones\",\"id\":\"milestones\",\"placeholder\":\"Motor, language, social benchmarks\"},{\"name\":\"Nutrition & Sleep\",\"id\":\"nutrition\",\"placeholder\":\"Diet, screen time, sleep schedule\"},{\"name\":\"Immunizations\",\"id\":\"vax\",\"placeholder\":\"Vaccines administered today or due\"},{\"name\":\"Anticipatory Guidance\",\"id\":\"guidance\",\"placeholder\":\"Safety, behavior, family support advice\"}]}",
+      "isSystem": true,
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "template-dermatology",
+      "name": "Dermatological Exam",
+      "specialty": "Dermatology",
+      "structure": "{\"fields\":[{\"name\":\"Lesion Description\",\"id\":\"description\",\"placeholder\":\"Size, color, borders, symmetry, location\"},{\"name\":\"Symptoms\",\"id\":\"symptoms\",\"placeholder\":\"Pruritus, bleeding, rapid change, pain\"},{\"name\":\"Biopsy details (if applicable)\",\"id\":\"biopsy\",\"placeholder\":\"Site, technique, pathology order\"},{\"name\":\"Sun Protection Counseling\",\"id\":\"sun_counseling\",\"placeholder\":\"SPF, protective wear, skin checks\"}]}",
+      "isSystem": true,
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "template-dental",
+      "name": "Dental Routine Exam",
+      "specialty": "Dental",
+      "structure": "{\"fields\":[{\"name\":\"Oral Hygiene Status\",\"id\":\"hygiene\",\"placeholder\":\"Plaque score, calculus levels\"},{\"name\":\"Periodontal Health\",\"id\":\"periodontal\",\"placeholder\":\"Pocket depths, gingivitis score\"},{\"name\":\"Hard Tissue Findings\",\"id\":\"caries\",\"placeholder\":\"Caries, restorations, fractures\"},{\"name\":\"Radiographic Review\",\"id\":\"xray\",\"placeholder\":\"Bitewings, periapicals findings\"},{\"name\":\"Treatment Plan\",\"id\":\"plan\",\"placeholder\":\"Fillings, hygiene visits, ortho\"}]}",
+      "isSystem": true,
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "template-general",
+      "name": "General SOAP Note",
+      "specialty": "General Medicine",
+      "structure": "{\"fields\":[{\"name\":\"Subjective\",\"id\":\"s\",\"placeholder\":\"Patient reports symptoms, history, lifestyle\"},{\"name\":\"Objective\",\"id\":\"o\",\"placeholder\":\"Physical exam, vitals, labs, diagnostics\"},{\"name\":\"Assessment\",\"id\":\"a\",\"placeholder\":\"Differential diagnosis, clinical reasoning\"},{\"name\":\"Plan\",\"id\":\"p\",\"placeholder\":\"Therapeutics, medications, education, follow-up\"}]}",
+      "isSystem": true,
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    }
+  ],
+  "reports": [
+    {
+      "id": "report-1",
+      "patientId": "patient-1",
+      "type": "VISIT_SUMMARY",
+      "title": "Patient Visit Summary - Jan 15, 2025",
+      "content": "Thank you for coming in today, John. We reviewed your blood pressure, which is currently stable at 136/84. We want to keep it under 130/80, so please continue taking your Lisinopril 10mg daily as prescribed. We discussed the dry cough you've been having. It's a common side effect of Lisinopril, so let's keep an eye on it. If it gets worse, we'll switch you to another medication. We look forward to seeing you in 3 months.",
+      "createdAt": "2025-01-15T11:00:00.000Z"
+    },
+    {
+      "id": "report-2",
+      "patientId": "patient-1",
+      "type": "VISIT_SUMMARY",
+      "title": "Patient Visit Summary - Apr 18, 2025",
+      "content": "John, congratulations on bringing your average blood pressure down to 128/78. The cough you reported has also cleared up. To help manage your LDL cholesterol levels, which were slightly high at 130, I have prescribed a low-dose cholesterol medication called Atorvastatin (10mg). Please take this once daily at night. Remember to continue walking daily and limit salt in your meals. We'll run a follow-up lipid test in about 2 months.",
+      "createdAt": "2025-04-18T11:15:00.000Z"
+    }
+  ],
+  "documents": [
+    {
+      "id": "doc-1",
+      "patientId": "patient-1",
+      "name": "Lipid Panel Results - April 2025",
+      "category": "Lab Results",
+      "content": "Lipid Panel: Total Cholesterol: 210 mg/dL (High). Triglycerides: 140 mg/dL (Normal). HDL: 45 mg/dL (Normal). LDL-C calculated: 130 mg/dL (High). Borderline cardiovascular risk.",
+      "createdAt": "2025-04-12T08:00:00.000Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-1",
+      "patientId": "patient-1",
+      "senderId": "doctor-sarah",
+      "content": "Hi John, I've sent your new visit summary and your cholesterol prescription. Please check them, and let me know if you have any questions.",
+      "createdAt": "2025-04-18T11:30:00.000Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "audit-1",
+      "userId": "user-sarah",
+      "action": "Log In",
+      "details": "Dr. Sarah Jenkins logged in successfully.",
+      "timestamp": "2026-06-24T08:30:00.000Z"
+    },
+    {
+      "id": "audit-2",
+      "userId": "user-sarah",
+      "action": "Create Encounter",
+      "details": "Created new pending encounter for Patient: John Doe.",
+      "timestamp": "2026-06-24T10:20:00.000Z"
+    }
+  ]
+}
